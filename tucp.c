@@ -24,11 +24,11 @@ void copyFile(const char *sourceFile, const char *destFile) {
 
     //I'm using open/read/write because I'd be setting my own buffer either way to properly keep track for large files.
     char buffer[8192];
-    ssize_t read, write;
+    ssize_t readBuff, writeBuff;
     //While the buffer is not empty, write the bytes in the buffer to the destination file
-    while ((read = read(sourceOpen, buffer, sizeof(buffer))) > 0) {
-        write = write(destOpen, buffer, read);
-        if (write < 0) {
+    while ((readBuff = read(sourceOpen, buffer, sizeof(buffer))) > 0) {
+        writeBuff = write(destOpen, buffer, readBuff);
+        if (writeBuff < 0) {
             perror("Error writing to destination file");
             close(sourceOpen);
             close(destOpen);
