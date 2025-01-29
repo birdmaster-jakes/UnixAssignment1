@@ -70,3 +70,26 @@ int isDirect(const char *requestDirect) {
     }
     return S_ISDIR(requestStat.st_mode);
 }
+
+int main(int argc, char *argv[]) {
+    //If there are not at least 3 arguments
+    if (argc < 3) {
+        fprintf(stderr, "Invalid number of arguments. Please run the program again with ./tucp, an existing source file, and a file name or directory path.");
+        exit(1);
+    }
+
+    //This could be either a destination file or a directory. Needs to be determined.
+    const char *destination = argv[argc - 1];
+
+    //Check if it is a directory
+    if (isDirect(destination)) {
+        copyMultiple(argc - 2, argv + 1, destination);
+    } else if (argc == 3) {
+        //Single file to file copy
+        copyFile(argv[1], destination);
+    } else {
+        fprintf(stderr, "For multiple files, the destination must be a directory. Please run the program again.\n");
+        exit(1);
+    }
+    return 0;
+}
