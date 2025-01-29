@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 
 void copyFile(const char *sourceFile, const char *destFile) {
     //Open the file in read only
@@ -59,3 +60,13 @@ void copyMultiple(int fileCount, char *files[], const char *destDirect) {
     }
 }
 
+//Determine if the second argument entered by the user is a file or a directory.
+int isDirect(const char *requestDirect) {
+    //Stores content in a struct to be analysed by stat. S_ISDIR returns true if requested content is a directory, false otherwise.
+    struct stat requestStat;
+    if (stat(requestDirect, &requestStat) != 0) {
+        perror("Error checking destination path");
+        return 0;
+    }
+    return S_ISDIR(requestStat.st_mode);
+}
