@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <sys/types.h>
+#include <string.h>
 
 void copyFile(const char *sourceFile, const char *destFile) {
     //Open the file in read only
