@@ -42,3 +42,9 @@ void copyFile(const char *sourceFile, const char *destFile) {
     close(sourceOpen);
     close(destOpen);
 }
+
+void copyFileToDirectory(const char *sourceFile, const char *destFile) {
+    char destPath[8192];
+    snprintf(destPath, sizeof(destPath), "%s/%s", destFile, strrchr(sourceFile, '/') ? strrchr(sourceFile, '/') + 1 : sourceFile);
+    copyFile(sourceFile, destPath);
+}
