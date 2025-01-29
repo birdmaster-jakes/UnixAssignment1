@@ -43,8 +43,19 @@ void copyFile(const char *sourceFile, const char *destFile) {
     close(destOpen);
 }
 
-void copyFileToDirectory(const char *sourceFile, const char *destFile) {
+//Assuming the second argument is a directory, save the path in a buffer and print it out to the user.
+//We can then just call the copy file function again but instead of writing to the destination file, it writes to the destination directory (destPath)
+void copyFileToDirectory(const char *sourceFile, const char *destDirect) {
     char destPath[8192];
-    snprintf(destPath, sizeof(destPath), "%s/%s", destFile, strrchr(sourceFile, '/') ? strrchr(sourceFile, '/') + 1 : sourceFile);
+    snprintf(destPath, sizeof(destPath), "%s/%s", destDirect, strrchr(sourceFile, '/') ? strrchr(sourceFile, '/') + 1 : sourceFile);
     copyFile(sourceFile, destPath);
 }
+
+//Given a file count and an array of file names, paste into a requested directory.
+//This is the same as just calling copyFileToDirectory multiple times
+void copyMultiple(int fileCount, char *files[], const char *destDirect) {
+    for (int i = 0; i < fileCount; i++) {
+        copyFileToDirectory(files[i], destDirect);
+    }
+}
+
